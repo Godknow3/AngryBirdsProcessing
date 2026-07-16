@@ -1,7 +1,7 @@
 # Angry Birds（Processing）
 
-这是一个使用 Processing 和 Box2D 制作的《愤怒的小鸟》练习项目。
-
+全网首发，这是一个使用 Processing 和 Box2D 制作的《愤怒的小鸟》练习项目。
+https://github.com/Godknow3/AngryBirdsProcessing
 ## 游戏说明
 
 - 游戏目前包含 6 个关卡。
