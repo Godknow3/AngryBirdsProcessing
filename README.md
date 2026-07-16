@@ -17,6 +17,21 @@
 
 在 Processing 中可通过“工具 → 管理工具 → Libraries”搜索并安装这些库。安装完成后，打开 `AngryBirds.pde` 并点击“运行”。
 
+## 项目结构
+
+```text
+AngryBirds/
+├─ AngryBirds.pde          主程序、关卡与界面
+├─ Scene.pde               场景绘制和发射逻辑
+├─ Bird.pde / Pig.pde      小鸟与猪的基础类
+├─ 其他 .pde 文件          具体角色、材料和特效
+├─ data/                   图片与音频资源
+├─ README.md               项目说明
+└─ .gitignore              Git 忽略规则
+```
+
+Processing 会把同一草图目录下的 `.pde` 文件作为多个代码标签一起编译，因此这些源码文件需要保留在项目根目录。`angrybirds_progress.txt` 是本地游戏进度，不会上传到 GitHub。
+
 ## 背景音乐
 
 游戏启动时会自动循环播放背景音乐，切换关卡不会重新开始播放。音乐文件位于：

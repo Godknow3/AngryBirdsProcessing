@@ -1,4 +1,3 @@
- //<>//
 import ddf.minim.*;
 
 import shiffman.box2d.*;
@@ -13,12 +12,12 @@ import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.ContactImpulse;
 import java.io.File;
 
-// A reference to our box2d world
+// Box2D 物理世界
 Box2DProcessing box2d;
 Minim minim;
 AudioPlayer backgroundMusic;
 
-// Game scene
+// 游戏场景与关卡状态
 Scene scene;
 int currentLevel = 1;
 final int LEVEL_COUNT = 6;
@@ -46,7 +45,7 @@ final float GAMEPLAY_ZOOM = 0.78;
 final float SLINGSHOT_POWER = 12.0 / GAMEPLAY_ZOOM;
 final float PHYSICS_TIME_STEP = 1.0 / 60.0;
 
-// Resources
+// 图片资源
 PImage imgCatapultLeft;
 PImage imgCatapultRight;
   
@@ -75,8 +74,7 @@ PImage imgMenuButton;
 PImage imgNextButton;
 PImage imgReplayButton;
 
-// Science Birds environment pack. These transparent layers are drawn before
-// the physics objects so the original sprites remain crisp and interactive.
+// 带透明通道的场景图层，绘制在物理对象下方
 PImage imgScienceBackground;
 PImage imgScienceMidground;
 PImage imgScienceMidgroundFar;
@@ -91,7 +89,7 @@ ArrayList<LavaBlastEffect> lavaBlastEffects = new ArrayList<LavaBlastEffect>();
 void setup()
 {
   fullScreen(P2D);
-  //size(1000,800);
+  // 调试窗口可改用 size(1000, 800)
   smooth();
 
   minim = new Minim(this);
@@ -200,8 +198,7 @@ void drawEnvironment()
   imageMode(CORNER);
   image(imgScienceBackground, 0, 0, width, height);
 
-  // The scenery assets contain transparency, allowing the distant desert and
-  // foreground vegetation to sit naturally behind the Box2D level.
+  // 按远景到前景的顺序绘制环境
   float s = sceneScale();
   image(imgScienceMidgroundFar, 0, groundY - 256 * s, width, 256 * s);
   image(imgScienceMidground, 0, groundY - 489 * s, width, 489 * s);
@@ -300,16 +297,14 @@ void buildLevelTwo()
   float s = sceneScale();
   float rampX = width * 0.60;
 
-  // The log is stable on the short flat top until the player hits it from
-  // the left. It then rolls down the right slope through the pig line.
+  // 滚木受击后沿斜坡滚向猪群
   scene.addObstacle(new Ramp(rampX, groundY - 45 * s, 160 * s, 90 * s, 46 * s));
   scene.addBox(new RollingLog(rampX, groundY - 119 * s, 58 * s));
 
   scene.addPig(new NormalPig(rampX + 135 * s, groundY - 25 * s, 48 * s));
   scene.addPig(new NormalPig(rampX + 200 * s, groundY - 25 * s, 48 * s));
 
-  // The final pig is protected by a light gate. The rolling log should break
-  // its ice support and let the wooden cap finish the chain reaction.
+  // 滚木撞断冰支撑后触发连锁坍塌
   float gateX = rampX + 285 * s;
   scene.addBox(new Ice(gateX - 38 * s, groundY - 44 * s, 24 * s, 88 * s));
   scene.addBox(new Ice(gateX + 38 * s, groundY - 44 * s, 24 * s, 88 * s));
@@ -322,22 +317,20 @@ void buildLevelThree()
 {
   float s = sceneScale(), x = width * 0.75;
 
-  // Lower chamber and diagonal stone braces.
+  // 下层空间与斜向石撑
   scene.addBox(new Wood(x - 46 * s, groundY - 60 * s, 24 * s, 120 * s));
   scene.addBox(new Wood(x + 46 * s, groundY - 60 * s, 24 * s, 120 * s));
   addRotatedBox(new Stone(x - 122 * s, groundY - 60 * s, 146 * s, 16 * s), 55);
   addRotatedBox(new Stone(x + 122 * s, groundY - 60 * s, 146 * s, 16 * s), -55);
-  // The middle floor is split around a narrow central gap. The upper pig
-  // stack can bridge it at rest, then drop into the lower chamber when either
-  // half shifts during the collapse.
+  // 中层留有窄缝，结构移动后上层会坠落
   scene.addBox(new Wood(x - 68 * s, groundY - 132 * s, 120 * s, 24 * s));
   scene.addBox(new Wood(x + 68 * s, groundY - 132 * s, 120 * s, 24 * s));
 
-  // Two large pigs are stacked vertically in the lower central chamber.
+  // 下层中央放置两只大型猪
   addProtectedPig(new NormalPig(x, groundY - 26 * s, 52 * s, PIG_BIG), 150);
   addProtectedPig(new NormalPig(x, groundY - 79 * s, 52 * s, PIG_BIG), 150);
 
-  // Four columns protect a vertical stack of small pigs.
+  // 四根立柱保护小型猪
   scene.addBox(new Stone(x - 82 * s, groundY - 197 * s, 20 * s, 106 * s));
   scene.addBox(new Wood(x - 42 * s, groundY - 197 * s, 14 * s, 106 * s));
   scene.addBox(new Wood(x + 42 * s, groundY - 197 * s, 14 * s, 106 * s));
@@ -346,8 +339,7 @@ void buildLevelThree()
   addProtectedPig(new NormalPig(x, groundY - 193 * s, 32 * s, PIG_SMALL), 150);
   addProtectedPig(new NormalPig(x, groundY - 226 * s, 32 * s, PIG_SMALL), 150);
 
-  // Split ledges support the boulder across a narrow central gap. Moving one
-  // side lets the boulder fall through the pig stack and into the base.
+  // 两侧平台支撑巨石，失衡后巨石会落下
   scene.addBox(new TriggerWood(x - 52 * s, groundY - 262 * s, 88 * s, 24 * s));
   scene.addBox(new TriggerWood(x + 52 * s, groundY - 262 * s, 88 * s, 24 * s));
   scene.addBox(new Ice(x - 62 * s, groundY - 309 * s, 18 * s, 70 * s));
@@ -355,7 +347,7 @@ void buildLevelThree()
   scene.addBox(new Ice(x, groundY - 354 * s, 146 * s, 20 * s));
   scene.addBox(new StoneBall(x, groundY - 302 * s, 56 * s));
 
-  // Short ice battlements reproduce the silhouette of the reference layout.
+  // 顶部使用短冰块组成护墙
   scene.addBox(new Ice(x - 66 * s, groundY - 378 * s, 14 * s, 28 * s));
   scene.addBox(new Ice(x - 22 * s, groundY - 378 * s, 14 * s, 28 * s));
   scene.addBox(new Ice(x + 22 * s, groundY - 378 * s, 14 * s, 28 * s));
@@ -364,8 +356,7 @@ void buildLevelThree()
   scene.freezeLevelBodies();
 }
 
-// Level 4: two targets on the ground support the upper bridge. Hitting either
-// support creates a useful chain reaction, but the rear pig needs a high arc.
+  // 第四关：击倒支撑触发连锁反应，后方目标需要高抛
 void buildLevelFour()
 {
   float s = sceneScale(), x = width * 0.72;
@@ -379,26 +370,24 @@ void buildLevelFour()
   addLateGameBirds(4);
 }
 
-// Level 5: a two-storey central fortress and a separate rear bunker require
-// the player to choose between collapsing supports and taking direct shots.
+  // 第五关：中央堡垒与后方掩体需要分别处理
 void buildLevelFive()
 {
   float s = sceneScale(), x = width * 0.74;
-  // Lower chamber: the posts touch the ground and the beam rests exactly on
-  // their top faces, avoiding the initial overlap that used to kill pigs.
+  // 下层立柱与横梁保持贴合，避免初始重叠
   scene.addBox(new Stone(x - 92 * s, groundY - 55 * s, 28 * s, 110 * s));
   scene.addBox(new Stone(x + 92 * s, groundY - 55 * s, 28 * s, 110 * s));
   scene.addBox(new Wood(x, groundY - 123 * s, 220 * s, 26 * s));
   scene.addPig(new NormalPig(x, groundY - 25 * s, 48 * s));
 
-  // Upper chamber is narrower, forcing a controlled shot at the supports.
+  // 上层较窄，需要精确击打支撑
   scene.addBox(new Wood(x - 66 * s, groundY - 190 * s, 26 * s, 108 * s));
   scene.addBox(new Wood(x + 66 * s, groundY - 190 * s, 26 * s, 108 * s));
   scene.addBox(new Stone(x, groundY - 256 * s, 174 * s, 24 * s));
   scene.addPig(new NormalPig(x, groundY - 160 * s, 48 * s));
   scene.addPig(new NormalPig(x, groundY - 292 * s, 48 * s));
 
-  // A rear ground target punishes shots that only collapse the central tower.
+  // 后方目标需要单独补射
   scene.addBox(new Ice(x + 190 * s, groundY - 43 * s, 24 * s, 86 * s));
   scene.addBox(new Ice(x + 260 * s, groundY - 43 * s, 24 * s, 86 * s));
   scene.addBox(new Wood(x + 225 * s, groundY - 98 * s, 94 * s, 24 * s));
@@ -406,31 +395,30 @@ void buildLevelFive()
   addLateGameBirds(4);
 }
 
-// Level 6: the final tower has staggered crossbeams. It is intentionally
-// taller and farther away, requiring both a high launch and follow-up shots.
+  // 第六关：高塔距离较远，需要高抛与补射
 void buildLevelSix()
 {
   float s = sceneScale(), x = width * 0.75;
-  // Stone base and first deck.
+  // 石质底座与第一层
   scene.addBox(new Stone(x - 102 * s, groundY - 60 * s, 30 * s, 120 * s));
   scene.addBox(new Stone(x + 102 * s, groundY - 60 * s, 30 * s, 120 * s));
   scene.addBox(new Wood(x, groundY - 134 * s, 244 * s, 28 * s));
   scene.addPig(new NormalPig(x, groundY - 25 * s, 48 * s));
 
-  // Wooden middle tier, seated on the top face of the first deck.
+  // 木质中层
   scene.addBox(new Wood(x - 78 * s, groundY - 198 * s, 27 * s, 100 * s));
   scene.addBox(new Wood(x + 78 * s, groundY - 198 * s, 27 * s, 100 * s));
   scene.addBox(new Ice(x, groundY - 261 * s, 202 * s, 26 * s));
   scene.addPig(new NormalPig(x, groundY - 172 * s, 48 * s));
 
-  // Narrow ice crown protected by a heavy stone cap.
+  // 冰质顶部由石块保护
   scene.addBox(new Ice(x - 58 * s, groundY - 318 * s, 25 * s, 88 * s));
   scene.addBox(new Ice(x + 58 * s, groundY - 318 * s, 25 * s, 88 * s));
   scene.addBox(new Stone(x, groundY - 375 * s, 154 * s, 26 * s));
   scene.addPig(new NormalPig(x, groundY - 298 * s, 48 * s));
   scene.addPig(new NormalPig(x, groundY - 412 * s, 48 * s));
 
-  // Separate rear bunker requires a deliberate final shot.
+  // 后方掩体需要最后单独击破
   scene.addBox(new Stone(x + 205 * s, groundY - 38 * s, 26 * s, 76 * s));
   scene.addBox(new Stone(x + 285 * s, groundY - 38 * s, 26 * s, 76 * s));
   scene.addBox(new Wood(x + 245 * s, groundY - 88 * s, 106 * s, 24 * s));
@@ -775,8 +763,8 @@ void beginContact(Contact contact)
   if(bodyA != null && bodyA.m_enableCollision) bodyA.onVelocityCollision(relativeSpeed, bodyB);
   if(bodyB != null && bodyB.m_enableCollision) bodyB.onVelocityCollision(relativeSpeed, bodyA);
 }
-void endContact(Contact contact) { /* handle end event */ }
-void preSolve(Contact contact, Manifold oldManifold) { /* handle end event */ }
+void endContact(Contact contact) { /* 无需处理碰撞结束 */ }
+void preSolve(Contact contact, Manifold oldManifold) { /* 无需预处理碰撞 */ }
 
 void postSolve(Contact contact, ContactImpulse impulse)
 {

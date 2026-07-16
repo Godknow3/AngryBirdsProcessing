@@ -30,8 +30,7 @@ class Scene
     m_pigs = new ArrayList<Pig>();
 
     float s = sceneScale();
-    // The fork is roughly 55 px below the top of the 201 px catapult art.
-    // Keep the physics launch point at that fork, not at the sprite centre.
+    // 发射点对齐弹弓叉口
     m_catapultCenter = new PVector(width * 0.21, groundY - 145 * s);
     m_catapultInner = new PVector(m_catapultCenter.x + 17 * s, m_catapultCenter.y);
     m_catapultOuter = new PVector(m_catapultCenter.x - 17 * s, m_catapultCenter.y);
@@ -175,11 +174,10 @@ class Scene
           if(insideTowerX && insideTowerY) releaseLevelBodies();
         }
       }
-      // We must always step through time!
+      // 推进物理世界
       box2d.step();
     
-      // Boxes that leave the screen, we delete them
-      // (note they have to be deleted from both the box2d world and our list
+      // 删除离开屏幕的方块
     
       for(Boundary b : m_boundaries){
         b.onUpdate();
@@ -294,7 +292,7 @@ class Scene
     }
   }
 
-  // Step the preview with the same velocity, gravity and timestep as Box2D.
+    // 使用与 Box2D 相同的参数预览轨迹
   void drawTrajectory(Bird bird)
   {
     float dx = m_catapultCenter.x - bird.m_pos.x;

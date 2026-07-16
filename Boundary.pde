@@ -2,7 +2,7 @@
 class Boundary extends HitBody
 {
 
-  // A boundary is a simple rectangle with x, y, width and height
+  // 创建矩形边界
   float m_x;
   float m_y;
   
@@ -20,9 +20,9 @@ class Boundary extends HitBody
   
   protected void makeBody(Vec2 center, float w, float h)
   {
-    // Define the polygon
+    // 设置矩形形状
     PolygonShape sd = new PolygonShape();
-    // Figure out the box2d coordinates
+    // 转换为 Box2D 坐标
     float box2dW = box2d.scalarPixelsToWorld(w / 2);
     float box2dH = box2d.scalarPixelsToWorld(h / 2);
     sd.setAsBox(box2dW, box2dH);
@@ -33,7 +33,7 @@ class Boundary extends HitBody
     fd.friction = 30.0;
     fd.restitution = 0.0;
     
-    // Create the body
+    // 创建静态刚体
     BodyDef bd = new BodyDef();
     bd.type = BodyType.STATIC;
     bd.position.set(box2d.coordPixelsToWorld(center));
@@ -43,9 +43,9 @@ class Boundary extends HitBody
     m_body.setUserData(this);
   }
 
-  // Draw the boundary, if it were at an angle we'd have to do something fancier
+    // 边界仅参与碰撞
   void onDisplay() {
-    // Keep invisible
+    // 保持不可见
   }
 
 }

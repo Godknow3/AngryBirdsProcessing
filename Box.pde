@@ -5,7 +5,7 @@ abstract class Box extends HitBody
   float m_hp;
   float m_maxHp;
 
-  // Constructor
+  // 创建方块
   Box(float x, float y, float w, float h)
   {
     super(HitBodyType.Box);
@@ -75,11 +75,11 @@ abstract class Box extends HitBody
     float box2dH = box2d.scalarPixelsToWorld(h / 2);
     sd.setAsBox(box2dW, box2dH);
 
-    // Define a fixture
+    // 设置碰撞参数
     FixtureDef fd = getFixture();
     fd.shape = sd;
 
-    // Define the body and make it from the shape
+    // 创建动态刚体
     BodyDef bd = new BodyDef();
     bd.type = BodyType.DYNAMIC;
     bd.linearDamping = getLinearDamping();
@@ -89,7 +89,6 @@ abstract class Box extends HitBody
     m_body = box2d.createBody(bd);
     m_body.createFixture(fd);
     m_body.setUserData(this);
-    //body.setMassFromShapes();
   }
 
 }

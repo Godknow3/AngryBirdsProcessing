@@ -14,7 +14,7 @@ abstract class Pig extends HitBody
   final float MIN_DAMAGE_SPEED = 1.0;
   int m_spawnProtectionFrames = 45;
 
-  // Constructor
+  // 创建猪
   Pig(float x, float y, float w, float h, float density)
   {
     super(HitBodyType.Pig);
@@ -83,7 +83,7 @@ abstract class Pig extends HitBody
     awardScore(5000);
   }
 
-  // Drawing the box
+    // 绘制猪
   void onDisplay()
   {
     m_timer++;
@@ -104,11 +104,11 @@ abstract class Pig extends HitBody
   {
     Shape sd = getShape();
 
-    // Define a fixture
+    // 设置碰撞形状
     FixtureDef fd = getFixture();
     fd.shape = sd;
 
-    // Define the body and make it from the shape
+    // 创建动态刚体
     BodyDef bd = new BodyDef();
     bd.type = BodyType.DYNAMIC;
     bd.position.set(box2d.coordPixelsToWorld(center));
@@ -116,7 +116,6 @@ abstract class Pig extends HitBody
     m_body = box2d.createBody(bd);
     m_body.createFixture(fd);
     m_body.setUserData(this);
-    //body.setMassFromShapes();
   }
 
 }

@@ -3,7 +3,7 @@ class StoneBall extends Box
   StoneBall(float x, float y, float size)
   {
     super(x, y, size, size);
-    // Keep the heavy boulder settled until a support or collision wakes it.
+    // 巨石受支撑移动或碰撞后才开始运动
     m_body.setAwake(false);
   }
 

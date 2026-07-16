@@ -38,7 +38,7 @@ abstract class HitBody
     box2d.destroyBody(m_body);
   }
   
-  // Serveral method to calculate magnitude of impulse in collision
+  // 根据碰撞冲量计算强度
   float averageNormalImpulse(ContactImpulse impulse)
   {
     float total = 0.0;
@@ -57,31 +57,8 @@ abstract class HitBody
     return max;
   }
   
-  void onImpulseCollision(ContactImpulse impulse) { /* Do nothing by default */ }
+  void onImpulseCollision(ContactImpulse impulse) { /* 默认不处理 */ }
 
-  void onVelocityCollision(float relativeSpeed, HitBody other) { /* Do nothing by default */ }
-
-  //void handleCollision(Contact c, Contact prev, Contact next)
-  //{
-  //  if(prev == null) return;
-
-  //  WorldManifold worldManifold = new WorldManifold(); c.getWorldManifold(worldManifold);
-    
-  //  Collision.PointState[] state1 = new Collision.PointState[2];
-  //  Collision.PointState[] state2 = new Collision.PointState[2];
-  //  Manifold oldManifold = prev.getManifold();
-  //  Collision.getPointStates(state1, state2, oldManifold, c.getManifold());
-
-  //  if(state2[0] != Collision.PointState.NULL_STATE && state2[0] != Collision.PointState.REMOVE_STATE){
-  //    Body bodyA = c.getFixtureA().getBody();
-  //    Body bodyB = c.getFixtureB().getBody();
-      
-  //    Vec2 point = worldManifold.points[0];
-  //    Vec2 vA = bodyA.getLinearVelocityFromWorldPoint(point);
-  //    Vec2 vB = bodyB.getLinearVelocityFromWorldPoint(point);
-  //    float approachVel = abs(Vec2.dot(vB.sub(vA), worldManifold.normal));
-  //    impulseCollision(approachVel);
-  //  }
-  //}
+  void onVelocityCollision(float relativeSpeed, HitBody other) { /* 默认不处理 */ }
 
 }

@@ -5,7 +5,7 @@ class TriggerWood extends Wood
     super(x, y, w, h);
   }
 
-  // Lightweight wood used only for deliberate chain-reaction mechanisms.
+    // 用于触发连锁反应的轻质木块
   FixtureDef getFixture()
   {
     FixtureDef fixture = new FixtureDef();

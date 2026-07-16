@@ -65,9 +65,7 @@ class RollingLog extends Box
   FixtureDef getFixture()
   {
     FixtureDef fixture = new FixtureDef();
-    // Level two relies on the log retaining enough momentum after hitting the
-    // pig line to push through the ice gate. The slope still lets one accurate
-    // red-bird hit start it rolling.
+    // 滚木保留足够动量，用于撞开猪群和冰门
     fixture.density = 26;
     fixture.friction = 1.2;
     fixture.restitution = 0.05;

@@ -13,9 +13,9 @@ class Wood extends Box
 
   FixtureDef getFixture()
   {
-    // Define a fixture
+    // 设置碰撞形状
     FixtureDef fd = new FixtureDef();
-    // Parameters that affect physics
+    // 设置物理参数
     fd.density = 45;
     fd.friction = 0.9;
     fd.restitution = 0.0;

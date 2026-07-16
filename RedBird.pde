@@ -2,14 +2,13 @@
 class RedBird extends Bird
 {
 
-  // Constructor
+  // 创建红鸟
   RedBird()
   {
     super(36 * sceneScale(), 36 * sceneScale());
   }
 
-  // The classic red bird is a basic, relatively light bird. It is effective
-  // at exposed pigs and unstable supports, but not at brute-force demolition.
+    // 红鸟较轻，适合攻击暴露目标和不稳定支撑
   float getImpactPower() { return 0.31; }
 
   void spawnDeathVisual(float x, float y)
@@ -37,9 +36,9 @@ class RedBird extends Bird
 
   FixtureDef getFixture()
   {
-    // Define a fixture
+    // 设置碰撞形状
     FixtureDef fd = new FixtureDef();
-    // Parameters that affect physics
+    // 设置物理参数
     fd.density = 19;
     fd.friction = 0.5;
     fd.restitution = 0.0;
@@ -48,7 +47,7 @@ class RedBird extends Bird
   
   void onEmit()
   {
-    // No effect
+    // 红鸟没有特殊技能
   }
 
 }

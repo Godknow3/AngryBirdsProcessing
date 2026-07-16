@@ -2,7 +2,7 @@
 class NormalPig extends Pig
 {
 
-  // Constructor
+  // 创建普通猪
   NormalPig(float x, float y)
   {
     this(x, y, 52);
@@ -23,7 +23,7 @@ class NormalPig extends Pig
 
   int m_pigSizeType;
 
-  // Drawing the box
+    // 绘制普通猪
   void onDraw(float x, float y, float a)
   {
     imageMode(CENTER);
@@ -52,9 +52,9 @@ class NormalPig extends Pig
 
   FixtureDef getFixture()
   {
-    // Define a fixture
+    // 设置碰撞形状
     FixtureDef fd = new FixtureDef();
-    // Parameters that affect physics
+    // 设置物理参数
     fd.density = m_density;
     fd.friction = 3.0;
     fd.restitution = 0.0;

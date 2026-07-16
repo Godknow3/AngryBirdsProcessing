@@ -139,14 +139,14 @@ class LavaBird extends Bird
 
     drawFuse(charging || armed, flying);
 
-    // Pear-shaped lava-orange body: narrow shoulders and a heavier base.
+    // 绘制上窄下宽的熔岩身体
     int normalBody = charging ? color(255, 156, 24) : color(239, 91, 25);
     int activeBody = meteor ? color(255, 205, 45) : normalBody;
     fill(armed ? lerpColor(activeBody, color(255, 250, 185), armedProgress) : activeBody);
     ellipse(0, 3, 49, 51);
     ellipse(0, 11, 54, 43);
 
-    // Deep-red volcanic cracks with a warm core while charging.
+    // 绘制熔岩裂纹与蓄力亮光
     strokeWeight(3);
     stroke(armed ? lerpColor(color(255, 210, 45), color(255), armedProgress) :
       charging ? color(255, 210, 45) : color(145, 35, 28));
@@ -158,12 +158,12 @@ class LavaBird extends Bird
     line(21, 12, 14, 14);
     line(-19, 16, -12, 12);
 
-    // Cream belly patch.
+    // 绘制腹部
     noStroke();
     fill(250, 226, 166);
     ellipse(0, 18, 35, 25);
 
-    // Focused white eyes and tiny charcoal pupils.
+    // 绘制眼睛
     fill(255);
     ellipse(-9, -5, 19, 18);
     ellipse(9, -5, 19, 18);
@@ -171,14 +171,14 @@ class LavaBird extends Bird
     ellipse(-5, -4, 5, 6);
     ellipse(5, -4, 5, 6);
 
-    // Heavy inverted brows, with small jagged inner tips.
+    // 绘制眉毛
     fill(18);
     quad(-24, -18, -3, -11, -5, -5, -25, -12);
     triangle(-5, -11, 1, -8, -4, -5);
     quad(24, -18, 3, -11, 5, -5, 25, -12);
     triangle(5, -11, -1, -8, 4, -5);
 
-    // Titanium-gray cone beak and its worn notch.
+    // 绘制鸟喙
     fill(92, 98, 102);
     triangle(-9, 2, 10, 2, 1, 17);
     fill(35, 40, 42);

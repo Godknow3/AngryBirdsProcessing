@@ -9,7 +9,7 @@ abstract class Bird extends HitBody
   int m_timeSlow;
   boolean m_deathEffectSpawned;
 
-  // Constructor
+  // 创建小鸟
   Bird(float w, float h)
   {
     super(HitBodyType.Bird);
@@ -57,14 +57,14 @@ abstract class Bird extends HitBody
 
   void spawnDeathVisual(float x, float y) { }
 
-  // Drawing the box
+    // 绘制小鸟
   void onDisplay()
   {
     m_timer++;
     
     pushMatrix();
     pushStyle();
-    // Before init the physical properties, use m_pos to locate and render bird
+      // 物理对象创建前使用初始坐标绘制
     if(m_body != null){
       Vec2 pos = box2d.getBodyPixelCoord(m_body);
       float a = m_body.getAngle();
@@ -109,11 +109,11 @@ abstract class Bird extends HitBody
   {
     Shape sd = getShape();
 
-    // Define a fixture
+    // 设置碰撞形状
     FixtureDef fd = getFixture();
     fd.shape = sd;
 
-    // Define the body and make it from the shape
+    // 创建动态刚体
     BodyDef bd = new BodyDef();
     bd.type = BodyType.DYNAMIC;
     bd.position.set(box2d.coordPixelsToWorld(center));
@@ -121,7 +121,6 @@ abstract class Bird extends HitBody
     m_body = box2d.createBody(bd);
     m_body.createFixture(fd);
     m_body.setUserData(this);
-    //body.setMassFromShapes();
   }
 
 }
